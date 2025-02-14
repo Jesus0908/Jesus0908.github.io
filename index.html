@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>💖 Tengo algo que decirte 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #ffe6e6;
+            color: #d63384;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .section1 h1 {
+            text-align: center;
+        }
+        .section1 .span-1 { font-size: 4rem; color: #ff4081; }
+        .section1 .span-2 { font-size: 2rem; }
+        .section1 .span-3 { font-size: 3rem; }
+        .section1 .span-4 { font-size: 2.5rem; }
+        .section1 button {
+            width: 90px;
+            height: 40px;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            background: #d63384;
+            margin-top: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .section1 button:hover { background: #ff4081; }
+        .letras span { font-size: 3rem; color: #ff4081; }
+        .meme-final {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            font-size: 2.5rem;
+            color: #d63384;
+        }
+        .meme-final img { width: 150px; margin-top: 10px; }
+        .desactivado { display: none; }
+        .oculto { visibility: hidden; }
+        .carta {
+            margin-top: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .carta:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="section1" id="s1">
+        <h1>
+            <span class="span-1">Hey 💖</span><br />
+            <span class="span-2">tengo que</span><br />
+            <span class="span-3">decirte</span><br />
+            <span class="span-4">algo...</span><br />
+            <button id="btn">ver 💌</button>
+        </h1>
+    </div>
+    <div class="section2 desactivado" id="s2">
+        <audio id="myAudio" src="./boy pablo & Cuco - La Novela (Official Audio).mp3" preload="auto"></audio>
+        <p class="letras" id="pLetras"></p>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const $ = (e) => document.getElementById(e);
+            const section1 = $("s1");
+            const btn = $("btn");
+            const audio = $("myAudio");
+            const section2 = $("s2");
+            const pLetras = $("pLetras");
+
+            const letrasConfig = [
+                { palabras: ["Eres", "Mi"], tiempo: 0 },
+                { palabras: ["Razón", "De"], tiempo: 1500 },
+                { palabras: ["Ser", "y"], tiempo: 3000 },
+                { palabras: ["Mi", "Felicidad"], tiempo: 4500 },
+                { palabras: ["Eterna", "día"], tiempo: 6000, esUltimo: true, cita: "Hoy es un día especial, y aunque no puedo estar físicamente a tu lado, quiero que sepas que mi corazón está más cerca de ti que nunca. La distancia puede separarnos en kilómetros, pero nunca en sentimientos, porque cada día que pasa me doy cuenta de lo afortunado que soy de tenerte en mi vida. Eres mi inspiración, mi apoyo y mi razón para sonreír incluso en los días más difíciles. Aunque no pueda abrazarte hoy, quiero que sepas que te llevo conmigo en cada latido de mi corazón. Eres mi persona favorita, y no puedo esperar a que llegue el día en que podamos estar juntos... ¡TE AMO!" },  
+            ];
+
+            btn.addEventListener("click", () => {
+                section1.classList.add("desactivado");
+                section2.classList.remove("desactivado");
+                audio.volume = 1.0;
+                audio.play().catch((error) => console.error("Error al reproducir el audio:", error));
+                mostrarLetras(letrasConfig);
+            });
+
+            function mostrarLetras(config) {
+                config.forEach((letraObj) => {
+                    setTimeout(() => {
+                        pLetras.innerHTML = "";
+                        const span1 = document.createElement("span");
+                        span1.textContent = letraObj.palabras[0];
+                        pLetras.appendChild(span1);
+                        pLetras.appendChild(document.createElement("br"));
+                        if (letraObj.esUltimo) {
+                            setTimeout(() => {
+                                pLetras.innerHTML = "";
+                                const gif = document.createElement("img");
+                                const span = document.createElement("span");
+                                span.innerHTML = "💖 ¡FELIZ DIA MI AMOR!... 💖";
+                                gif.src = "./corazon.gif"; 
+                                pLetras.appendChild(span);
+                                pLetras.appendChild(document.createElement("br"));
+                                pLetras.appendChild(gif);
+                                pLetras.classList.add("meme-final");
+                                const cita = document.createElement("p");
+                                cita.style.fontSize = "1.5rem";
+                                cita.style.color = "#ff4081";
+                                cita.innerText = letraObj.cita;  
+                                pLetras.appendChild(cita);
+                                const carta = document.createElement("a");
+                                const imgCarta = document.createElement("img");
+                                carta.href = "./carta.pdf"; 
+                                carta.download = "carta.pdf";
+                                carta.classList.add("carta");
+                                imgCarta.src = "./carta.gif"; 
+                                imgCarta.alt = "Leer carta";
+                                imgCarta.width = 150; 
+                                carta.appendChild(imgCarta);
+                                pLetras.appendChild(document.createElement("br"));
+                                pLetras.appendChild(carta);
+                            }, 2500);
+                        } else {
+                            const span2 = document.createElement("span");
+                            span2.textContent = letraObj.palabras[1];
+                            span2.classList.add("oculto");
+                            pLetras.appendChild(span2);
+                            setTimeout(() => {
+                                span2.classList.remove("oculto");
+                            }, 520);
+                        }
+                    }, letraObj.tiempo);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
